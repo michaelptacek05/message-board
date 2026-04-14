@@ -1,39 +1,24 @@
 "use client";
-
 import { useState } from "react";
 
 type MessageFormProps = {
-    onMessageAdded: () => void;
+    onSendMessage: (user: string, text: string) => void;
 };
 
-export default function MessageForm({ onMessageAdded }: MessageFormProps) {
+export default function MessageForm({ onSendMessage }: MessageFormProps) {
     const [user, setUser] = useState("");
     const [text, setText] = useState("");
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!user || !text) return;
-
-        try {
-            await fetch("http://localhost:3001/api/messages", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user, text }),
-            });
-
-            setUser("");
-            setText("");
-            onMessageAdded();
-        } catch (error) {
-            console.error("Chyba při odesílání:", error);
-        }
+        onSendMessage(user, text);
+        setUser("");
+        setText("");
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="mb-10 bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200"
-        >
+        <form onSubmit={handleSubmit} className="mb-10 bg-gray-50 p-6 rounded-lg shadow-md border border-gray-200">
             <h2 className="text-xl font-semibold mb-4">Přidat novou zprávu</h2>
             <div className="mb-4">
                 <input
@@ -50,7 +35,7 @@ export default function MessageForm({ onMessageAdded }: MessageFormProps) {
                     placeholder="Tvoje zpráva..."
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded min-h-[100px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 min-h-[100px]"
                     required
                 />
             </div>
