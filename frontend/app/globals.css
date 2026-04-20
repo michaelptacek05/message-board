@@ -1,1 +1,106 @@
 @import "tailwindcss";
+
+@layer base {
+  * {
+    background-image: none !important;
+  }
+}
+
+/* iPhone-style Chat App */
+:root {
+  --bg-light: #f5f5f7;
+  --bg-dark: #000000;
+  --bubble-sent: #007aff;
+  --bubble-received: #e5e5ea;
+  --text-dark: #000000;
+  --text-light: #ffffff;
+  --divider: #e5e5ea;
+  --iphone-frame: #1d1d1f;
+  --iphone-bezels: #0a0a0a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-light: #000000;
+    --bg-dark: #1c1c1e;
+    --bubble-sent: #0084ff;
+    --bubble-received: #414245;
+    --text-dark: #ffffff;
+    --divider: #3a3a3c;
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background-color: var(--iphone-bezels);
+}
+
+body {
+  background-color: var(--iphone-bezels);
+  background-image: none !important;
+  color: var(--text-dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+/* iPhone X Container */
+.iphone-container {
+  width: 100%;
+  max-width: 390px;
+  aspect-ratio: 9 / 19.5;
+  background-color: var(--iphone-frame);
+  border-radius: 60px;
+  border: 12px solid var(--iphone-frame);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Notch */
+.iphone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 210px;
+  height: 30px;
+  background-color: var(--iphone-bezels);
+  border-radius: 0 0 40px 40px;
+  z-index: 50;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Home Indicator */
+.iphone-home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  z-index: 50;
+}
+
+/* Screen content */
+.iphone-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: white;
+  background-image: none !important;
+  margin-top: 0;
+}

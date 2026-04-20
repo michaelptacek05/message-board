@@ -8,13 +8,20 @@ export default function Home() {
     const { messages, isLoading, sendMessage } = useMessages();
 
     return (
-        <main className="max-w-2xl mx-auto p-8 font-sans">
-            <h1 className="text-4xl font-bold mb-8 text-center text-blue-600">
-                Mini Message Board (Live)
-            </h1>
-            <MessageForm onSendMessage={sendMessage} />
-            <h2 className="text-2xl font-bold mb-4">Zprávy:</h2>
-            <MessageList messages={messages} isLoading={isLoading} />
+        <main className="w-full h-full flex flex-col bg-white">
+            <header className="bg-white border-b border-gray-200 pt-12 pb-3 px-4 flex-shrink-0">
+                <h1 className="text-xl font-bold text-center text-gray-900">
+                    Zprávy
+                </h1>
+            </header>
+
+            <div className="flex-1 overflow-y-auto bg-white">
+                <MessageList messages={messages} isLoading={isLoading} />
+            </div>
+
+            <div className="bg-white border-t border-gray-200 flex-shrink-0 pb-6">
+                <MessageForm onSendMessage={sendMessage} />
+            </div>
         </main>
     );
 }
