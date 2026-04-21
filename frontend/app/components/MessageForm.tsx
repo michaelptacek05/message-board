@@ -1,41 +1,34 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 type MessageFormProps = {
     onSendMessage: (user: string, text: string) => void;
 };
 
 export default function MessageForm({ onSendMessage }: MessageFormProps) {
-    const [user, setUser] = useState("");
     const [text, setText] = useState("");
     const [showUserInput, setShowUserInput] = useState(false);
+    const { user, updateUser, isAuthenticated } = useCurrentUser();
+    const [tempUserInput, setTempUserInput] = useState("");
 
-    useEffect(() => {
-        const saved = localStorage.getItem("currentUser");
-        if (saved) {
-            setUser(saved);
-        } else {
-            setShowUserInput(true);
-        }
-    }, []);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!user || !text) return;
-        localStorage.setItem("currentUser", user);
-        onSendMessage(user, text);
-        setText("");
-    };
-
-    const handleChangeUser = () => {
+    const handleOpenUserInput = () => {
+        setTempUserInput(user);
         setShowUserInput(true);
     };
 
     const handleConfirmUser = () => {
-        if (user.trim()) {
-            localStorage.setItem("currentUser", user);
+        if (tempUserInput.trim()) {
+            updateUser(tempUserInput);
             setShowUserInput(false);
         }
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!isAuthenticated || !text.trim()) return;
+        onSendMessage(user, text);
+        setText("");
     };
 
     return (
@@ -45,8 +38,8 @@ export default function MessageForm({ onSendMessage }: MessageFormProps) {
                     <input
                         type="text"
                         placeholder="Tvoje jméno"
-                        value={user}
-                        onChange={(e) => setUser(e.target.value)}
+                        value={tempUserInput}
+                        onChange={(e) => setTempUserInput(e.target.value)}
                         className="flex-1 px-4 py-2 bg-gray-100 text-gray-900 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                         autoFocus
                     />
@@ -61,14 +54,13 @@ export default function MessageForm({ onSendMessage }: MessageFormProps) {
             ) : (
                 <button
                     type="button"
-                    onClick={handleChangeUser}
+                    onClick={handleOpenUserInput}
                     className="text-xs text-blue-600 font-semibold hover:underline"
                 >
                     Přihlášen/a jako: <span className="font-bold">{user}</span>
                 </button>
             )}
 
-            {/* Message input area */}
             <div className="flex gap-2 items-flex-end">
                 <textarea
                     placeholder="Napsat zprávu..."
@@ -86,7 +78,7 @@ export default function MessageForm({ onSendMessage }: MessageFormProps) {
                 />
                 <button
                     type="submit"
-                    disabled={!user || !text.trim()}
+                    disabled={!isAuthenticated || !text.trim()}
                     className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed font-bold text-lg"
                 >
                     ↑

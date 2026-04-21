@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // Řádek "url = ..." je zde od verze 7 ZAKÁZÁN
 }
 
 model Message {
