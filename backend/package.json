@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch index.ts",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "docker:build": "docker build -t ghcr.io/michaelptacek05/message-board-backend ."
   },
   "keywords": [],
   "author": "",
