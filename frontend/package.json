@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "docker:build": "docker build -t ghcr.io/michaelptacek05/message-board-frontend ."
+    "docker:build": "docker build --platform linux/amd64 -t ghcr.io/michaelptacek05/message-board-frontend ."
   },
   "dependencies": {
     "next": "16.2.3",
