@@ -14,7 +14,10 @@ import { globalErrorHandler } from "./middleware/errorHandler.ts";
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+const prisma = new PrismaClient({
+    adapter,
+    datasourceUrl: process.env.DATABASE_URL,
+});
 
 const app = express();
 const PORT = 3001;
