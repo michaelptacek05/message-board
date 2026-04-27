@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package.json package-lock.json* yarn.lock* ./
 RUN npm ci --silent
 
+COPY prisma ./prisma
 COPY . .
 
 ENV NODE_ENV=production
