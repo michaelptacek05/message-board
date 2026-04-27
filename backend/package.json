@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch index.ts",
     "studio": "npx prisma studio",
-    "docker:build": "docker build --platform linux/amd64 -t ghcr.io/michaelptacek05/message-board-backend ."
+    "docker:build": "docker build --no-cache --platform linux/amd64 -t ghcr.io/michaelptacek05/message-board-backend ."
   },
   "keywords": [],
   "author": "",
