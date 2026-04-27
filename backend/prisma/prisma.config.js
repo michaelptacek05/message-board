@@ -2,5 +2,7 @@ import "dotenv/config";
 
 export default {
     schema: "prisma/schema.prisma",
-    datasourceUrl: process.env.DATABASE_URL,
+    datasource: {
+        url: process.env.DATABASE_URL,
+    },
 };
