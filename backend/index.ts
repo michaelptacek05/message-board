@@ -18,9 +18,10 @@ const prisma = new PrismaClient({ adapter });
 
 const app = express();
 const PORT = 3001;
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "http://localhost:3000";
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: { origin: "http://localhost:3000" },
+    cors: { origin: CORS_ORIGIN },
 });
 
 const messageService = new MessageService(prisma);
