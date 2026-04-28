@@ -7,6 +7,8 @@ RUN npm ci --silent
 COPY prisma ./prisma
 COPY . .
 
+RUN npx prisma generate
+
 ENV NODE_ENV=production
 EXPOSE 3001
 
